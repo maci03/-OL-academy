@@ -1,0 +1,15 @@
+.conteiner{
+    width: 762px;
+    margin: auto;
+};
+img{
+    width: 100%;
+}
+@media screen and (prefers-color-scheme: dark){
+    body{
+        background-color: black;
+    }
+    h1, p{
+        color: white;
+    }
+} 

@@ -1,89 +1,57 @@
 
-
-
-
-//1
-
-class Vehicle {
-  constructor(make, model) {
-    this.make = make; 
-    this.model = model; 
-  }
+function createCar(make, model, year) {
+  const car = Object.create(carMethods);
+  car.owners = [];
+  car.make = make;
+  car.model = model;
+  car.year = year;
+  return car;
 }
 
 
-class Car extends Vehicle {
-  constructor(make, model, year) {
-    super(make, model);
-    this.year = year; 
-  }
+  
+  
+function createPerson(name, surname, age, gender, cars = []) {
+  const person = Object.create(perMethods);
+  person.name = name;
+  person.surname = surname;
+  person.age = age;
+  person.gender = gender;
+  person.cars = cars;
+  return person;
 }
 
-  owner = [];
-
-
-  
-  class Person {
-    constructor(name, surname, age, gender, cars = []) {
-      this.name = name; 
-      this.surname = surname; 
-      this.age = age; 
-      this.gender = gender; 
-      this.cars = cars; 
-  }
-}
-  //4
-   function fullName(){
-    return `${this.name} ${this.surname}`
-  }
-  function countCars(){
-    return `${this.cars.lenght}`
-  }
-  
-  
-  
-  //6
-  this.addOwner = function(owner){
+const Carmethods = {
+  getCarInfo() {
+      return `${this.make} ${this.model} is released in ${this.year}`;
+    },
+  addOwner(owner) {
     this.owners.push(owner);
-  }
-  this.removeOwner = function (owner) {
-    this.owners = this.owners.filter((oldOwner) => oldOwner !== owner); // ეს საკმაოდ გამიჭირდა
-  }
-  
-  this.getOwnersCount = function(owner){
-    return this.owner.lenght
-  }
-  
-  
-  //7
-  this.buyCars = function (car){
-    this.cars.push(car)
-    this.addOwner(this)
-  }
-  
-  this.sellsCar = function (car) {
-    //სახელის წაშლა ვერ ვქენი 
-    car.removeOwner();
-  };
-  
-  //8
-  this.getOwnerNames = () => {return this.fullname()}
-  
-  
-  //9
-  this.getFullInfo = function () {
-    return `${this.make} ${this.model} from ${
-      this.year
-    }. ${this.getOwnersCount()} person owns this car. These are - ${this.getOwnerNames().join(
-      ", "
-    )}.`;
-  };
-  
-  
-  //10
-  this.getCarInfo = function () {
-    return `${this.make} ${this.model} released in ${this.year}`;
-  };
+    },
+
+  getOwnersCount() { return this.owners.length; },
+  getOwnerNames() {
+      return this.owners.map(owner => ` ${owner.fullName()}`);
+    }, 
+  getFullInfo() { return `${this.make} ${this.model} from ${this.year}. ${this.getOwnersCount()} person owns this car. These are -${this.getOwnerNames()}`
+    }
+}
+
+
+const perMethods = {
+  fullName() {
+    return `${this.name} ${this.surname}`;
+  },
+  countCars() {
+        return Array.isArray(this.cars) ? this.cars.length : `enter array of cars as argument`;
+  },
+  buysCar(car) {
+    this.cars.push(car);
+    car.addOwner(this)
+  },
+ 
+  getAllCarsInfo() { return `${this.name} owns these cars:${ this.cars.map(car => ` ${car.getCarInfo()}`) }` }
+}
   
   
   
